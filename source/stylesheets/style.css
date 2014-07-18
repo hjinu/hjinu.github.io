@@ -696,7 +696,7 @@ padding:6px 12px;
 }
 
 header {
-background:#3e444d;
+background:#ffffff;
 -o-box-shadow:0;
 -moz-box-shadow:0;
 -ms-box-shadow:0;
@@ -717,6 +717,17 @@ color:#f6f8fb!important;
 text-shadow:0;
 margin-bottom:0;
 top:10px;
+}
+
+.fullscreen_bg {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	background-size: cover;
+  background-position: center center;
 }
 
 nav {
