@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8">
+	<title>Naver 오픈소스 Arcus 정리 | hjinu</title>
+
+	<meta name="author" content="hjinu">
+	
+	<meta name="description" content="hjinu 14 Jul 2014 Naver 오픈소스 Arcus 정리 네이버에서 오픈 소스 프로젝트로 공개한 Arcus를 공부하면서 알게 된 Arcus의 특징 몇가지를 정리함. - Zookeeper 사용 서버를 관리하기 위해서 Zookeeper를 사용. 서버의 추가나 &hellip;">
+
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href="/atom.xml" rel="alternate" title="hjinu" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400" />
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+<body class="post-template">
+  <main class="content" role="main"><article class="post">
+  
+	<header class="post-header">
+		<a id="blog-logo" href="/">hjinu</a>
+	</header>
+	<span class="post-meta">14 Jul 2014</span>
+	<h1 class="post-title">Naver 오픈소스 Arcus 정리</h1>
+
+	<section class="post-content">
+		<p>네이버에서 오픈 소스 프로젝트로 공개한 Arcus를 공부하면서 알게 된 Arcus의 특징 몇가지를 정리함.</p>
+
+<h5 id="zookeeper-">- Zookeeper 사용</h5>
+
+<ul>
+  <li>
+    <p>서버를 관리하기 위해서 Zookeeper를 사용. 서버의 추가나 장애 발생 시 대응에 용이.</p>
+  </li>
+  <li>
+    <p>서버가 켜질 때엔 Zookeeper에 IP:PORT로 검색해서 자신이 서비스되어야할 코드를 찾고 이 코드에 ephemeral node를 생성. ephemeral node는 세션이 유효한 동안만 살아있기 때문에 만약에 서버에 문제가 생겨서 세션이 종료되면 node가 사라지고 이를 바탕으로 캐시 데이터의 재분배가 가능.</p>
+  </li>
+</ul>
+
+<h5 id="eager-item-expiration">- Eager Item Expiration</h5>
+
+<ul>
+  <li>
+    <p>기존의 메모리 관리 방식에서는 LRU가 실행되면 Tail에 위치한 N개의 item만 검사한다. 이 방식에 문제점이 있는데 이는 memcached의 expired된 아이템을 삭제하는 방식과 관련되어 있음.</p>
+  </li>
+  <li>
+    <p>memcached는 item의 expired_time이 지나면 바로 메모리에서 지우는 것이 아니라 expired된 아이템에 get 요청을 했을 때 ‘Item이 없다’ 라고 응답하고 item을 지우기 때문.</p>
+  </li>
+  <li>
+    <p>그래서 Tail에 위치한 N개의 item만을 검사하면 이미 expired된 item이 있음에도 불구하고 다른 item이 evict될 수 있다. 또한 expired된 item이 메모리에 계속 올라가 있기 때문에 메모리 사용량을 확인하는 데에도 어려움.</p>
+  </li>
+  <li>
+    <p>Eager Item Expiration은 이 문제를 해결하기 위해서 Tail에 위치한 N개의 item 이 외에도 <strong>LRU 리스트를 점진적으로 traverse하면서 N개의 item을 검사</strong>한다.</p>
+  </li>
+</ul>
+
+<h5 id="collection-">- Collection 지원</h5>
+
+<ul>
+  <li>네이버 서비스 중에서 feed를 제공하는 서비스의 요구사항에 맞춘 데이터 구조</li>
+</ul>
+
+	</section>
+
+  <footer class="post-footer">
+  <section class="author">
+    <h4>hjinu</h4>
+    <p></p>
+  </section>
+  <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Naver 오픈소스 Arcus 정리&amp;url=http://hjinu.github.io/blog/2014/07/14/naver-ec98a4ed9488ec868cec8aa4-ed9484eba19ceca09ded8ab8-arcus-eca095eba6ac/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://hjinu.github.io/blog/2014/07/14/naver-ec98a4ed9488ec868cec8aa4-ed9484eba19ceca09ded8ab8-arcus-eca095eba6ac/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://hjinu.github.io/blog/2014/07/14/naver-ec98a4ed9488ec868cec8aa4-ed9484eba19ceca09ded8ab8-arcus-eca095eba6ac/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+    </a>
+  </section>
+</footer>
+  <hr>
+  
+    <div class="share">
+</div>
+
+  
+  
+  <section id="comment">
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+  
+</article></main>
+  <footer class="site-footer"><a class="subscribe icon-feed" href="http://hjinu.github.io/atom.xml"><span class="tooltip">Subscribe!</span></a>
+
+
+<div class="inner">
+
+
+
+
+
+
+
+
+
+<section class="copyright">All content copyright <a href="/">hjinu</a> © 2014 • All rights reserved.</section>
+
+<section class="poweredby">Casper theme by <a class="icon-ghost" href="http://tryghost.org">Ghost</a> &amp; Published with <a href="http://octopress.org">Octopress</a></section>
+
+</div>
+</footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="//yandex.st/highlightjs/7.3/highlight.min.js"></script>  
+<script>hljs.initHighlightingOnLoad()</script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'hjinu';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://hjinu.github.io/blog/2014/07/14/naver-ec98a4ed9488ec868cec8aa4-ed9484eba19ceca09ded8ab8-arcus-eca095eba6ac/';
+        var disqus_url = 'http://hjinu.github.io/blog/2014/07/14/naver-ec98a4ed9488ec868cec8aa4-ed9484eba19ceca09ded8ab8-arcus-eca095eba6ac/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+</body>
+</html>

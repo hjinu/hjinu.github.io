@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 개발 일기 | hjinu]]></title>
+  <link href="http://hjinu.github.io/blog/categories/gaebal-ilgi/atom.xml" rel="self"/>
+  <link href="http://hjinu.github.io/"/>
+  <updated>2014-07-18T17:46:49+09:00</updated>
+  <id>http://hjinu.github.io/</id>
+  <author>
+    <name><![CDATA[hjinu]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[github에서 gem 설치하기]]></title>
+    <link href="http://hjinu.github.io/blog/2014/07/03/githubec9790ec849c-gem-ec84a4ecb998ed9598eab8b0/"/>
+    <updated>2014-07-03T21:03:14+09:00</updated>
+    <id>http://hjinu.github.io/blog/2014/07/03/githubec9790ec849c-gem-ec84a4ecb998ed9598eab8b0</id>
+    <content type="html"><![CDATA[<p>dalli 소스를 분석하던 도중 소스를 약간 수정하려고 fork를 해왔는데 이 fork한 gem을 어떻게 설치해야 하는지 몰라서 당황했음.</p>
+
+<p>방법을 좀 찾아보니 git을 클론해와서 gem을 다시 빌드, 설치하면 되는데 정리해보겠음.</p>
+
+<ol>
+  <li>
+    <p>git을 클론</p>
+
+    <p>git clone https://github.com/hjinu/dalli.git</p>
+  </li>
+  <li>
+    <p>gem을 빌드</p>
+
+    <p>cd dalli &amp;&amp; gem bulid dalli.gemspec</p>
+  </li>
+  <li>
+    <p>gem을 인스톨</p>
+
+    <p>gem install dalli-2.7.2.gem</p>
+  </li>
+</ol>
+
+<p>출처는 요기 : http://stackoverflow.com/questions/16365146/install-ruby-gem-globally-from-github-repository</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vi 검색 및 치환]]></title>
+    <link href="http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998/"/>
+    <updated>2014-07-03T18:52:45+09:00</updated>
+    <id>http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998</id>
+    <content type="html"><![CDATA[<p>애초에 치환이라는 걸 잘 안쓰다가 sublime 쓰다가 Vi로 다시 넘어보니까 치환이 너무 필요했음…</p>
+
+<p>찾아보니까 너무 쉽고 편함. 아니 사실 쉽진않아.. 어쨌든 정리하면.</p>
+
+<h3 id="section"><strong>검색</strong></h3>
+
+<p>앞으로 검색 	: /KEYWORD</p>
+
+<p>뒤로 검색     	: ?KEYWORD</p>
+
+<p>다음 검색 결과 	: n</p>
+
+<p>이전 검색 결과 	: N</p>
+
+<h3 id="section-1"><strong>치환</strong></h3>
+
+<p>현재 라인에서 첫 번째 결과만 치환   :  s/OLD/NEW</p>
+
+<p>현재 라인에서 모든 결과 치환        :  s/OLD/NEW/g</p>
+
+<p>라인에서 라인 사이를 모두 치환      :  #,*s/OLD/NEW/g</p>
+
+<p>파일 내의 모든 결과를 치환          :  %s/OLD/NEW/g</p>
+
+<p>출처는 요기 : http://www.felixgers.de/teaching/emacs/vi_search_replace.html</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[테스트 주도 개발(TDD)에 대해서]]></title>
+    <link href="http://hjinu.github.io/blog/2014/07/02/ed858cec8aa4ed8ab8-eca3bceb8f84-eab09cebb09ctddec9790-eb8c80ed95b4ec849c/"/>
+    <updated>2014-07-02T14:16:09+09:00</updated>
+    <id>http://hjinu.github.io/blog/2014/07/02/ed858cec8aa4ed8ab8-eca3bceb8f84-eab09cebb09ctddec9790-eb8c80ed95b4ec849c</id>
+    <content type="html"><![CDATA[<p>예전에 Rails Tutorial 할때 테스트를 계속 짜면서 이걸 왜 하나 싶었는데 알고보니까 TDD의 장점은 과감한 리팩토링이 가능한 거였다.</p>
+
+<p>튜토리얼은 따라 하는 거라서 리팩토링을 할 일이 없어서 별로 필요성을 못 느꼈었는데 새삼 대단한 걸 느끼고 계속 테스트를 작성하는 버릇을 들여야겠다고 생각함. 유닛 단위의 테스트가 크게 의미있다기 보다는 그 테스트들이 점점 쌓여서 소프트웨어의 무결성을 보장한다는 점이 참 대단. 젤리버스에서 일 할 때도 추후에 수정한 부분이 예상치 못한 부분을 건드려서 버그를 만드는 경우가 많았는데 이런 점을 대부분 막을 수 있을 것 같다. </p>
+
+<p>git 으로 버전관리 + 테스트 작성으로 맘에 안드는 부분이 있으면 그냥 가벼운 마음으로 브랜치해서 테스트 통과하는 지만 보면서 과감하게 들어엎는 리팩토링을 할 수 있을 거라고 생각하니 뭔가 두근두근</p>
+]]></content>
+  </entry>
+  
+</feed>

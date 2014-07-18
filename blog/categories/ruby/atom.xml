@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | hjinu]]></title>
+  <link href="http://hjinu.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://hjinu.github.io/"/>
+  <updated>2014-07-18T17:46:49+09:00</updated>
+  <id>http://hjinu.github.io/</id>
+  <author>
+    <name><![CDATA[hjinu]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[github에서 gem 설치하기]]></title>
+    <link href="http://hjinu.github.io/blog/2014/07/03/githubec9790ec849c-gem-ec84a4ecb998ed9598eab8b0/"/>
+    <updated>2014-07-03T21:03:14+09:00</updated>
+    <id>http://hjinu.github.io/blog/2014/07/03/githubec9790ec849c-gem-ec84a4ecb998ed9598eab8b0</id>
+    <content type="html"><![CDATA[<p>dalli 소스를 분석하던 도중 소스를 약간 수정하려고 fork를 해왔는데 이 fork한 gem을 어떻게 설치해야 하는지 몰라서 당황했음.</p>
+
+<p>방법을 좀 찾아보니 git을 클론해와서 gem을 다시 빌드, 설치하면 되는데 정리해보겠음.</p>
+
+<ol>
+  <li>
+    <p>git을 클론</p>
+
+    <p>git clone https://github.com/hjinu/dalli.git</p>
+  </li>
+  <li>
+    <p>gem을 빌드</p>
+
+    <p>cd dalli &amp;&amp; gem bulid dalli.gemspec</p>
+  </li>
+  <li>
+    <p>gem을 인스톨</p>
+
+    <p>gem install dalli-2.7.2.gem</p>
+  </li>
+</ol>
+
+<p>출처는 요기 : http://stackoverflow.com/questions/16365146/install-ruby-gem-globally-from-github-repository</p>
+]]></content>
+  </entry>
+  
+</feed>

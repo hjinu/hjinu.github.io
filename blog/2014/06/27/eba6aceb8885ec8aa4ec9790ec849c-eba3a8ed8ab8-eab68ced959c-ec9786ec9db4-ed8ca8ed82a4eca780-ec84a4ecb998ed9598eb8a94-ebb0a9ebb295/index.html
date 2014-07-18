@@ -1,0 +1,166 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8">
+	<title>리눅스에서 루트 권한 없이 패키지 설치하는 방법 | hjinu</title>
+
+	<meta name="author" content="hjinu">
+	
+	<meta name="description" content="hjinu 27 Jun 2014 리눅스에서 루트 권한 없이 패키지 설치하는 방법 리눅스 초보에서 개발 환경 세팅은 언제나 골치 아프다. 특히 루트 권한을 얻지 못할 때에는 더 심한데 그 이유는 패키지를 쉽게 설치할 수 있는 yum 같은 패키지 관리자가 루트 권한을 &hellip;">
+
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href="/atom.xml" rel="alternate" title="hjinu" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400" />
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+<body class="post-template">
+  <main class="content" role="main"><article class="post">
+  
+	<header class="post-header">
+		<a id="blog-logo" href="/">hjinu</a>
+	</header>
+	<span class="post-meta">27 Jun 2014</span>
+	<h1 class="post-title">리눅스에서 루트 권한 없이 패키지 설치하는 방법</h1>
+
+	<section class="post-content">
+		<p>리눅스 초보에서 개발 환경 세팅은 언제나 골치 아프다. 특히 루트 권한을 얻지 못할 때에는 더 심한데 그 이유는</p>
+
+<ol>
+  <li>
+    <p>패키지를 쉽게 설치할 수 있는 yum 같은 패키지 관리자가 루트 권한을 자주 요청하기 때문이고</p>
+  </li>
+  <li>
+    <p>그래서 직접 다운로드 받아서 설치하려고 해도 기본적으로 패키지가 설치되는 경로가 루트 권한을 필요로 하기 때문이다.</p>
+  </li>
+</ol>
+
+<p>그래서 루트 권한이 없을 때에는 내가 권한을 모두 가지고 있는 홈 폴더에 설치해야 하는데 이 방법을 적는다.</p>
+
+<p>내 홈폴더에 설치하는 과정은 밑에 두 가지 나눌 수 있다.</p>
+
+<ol>
+  <li>
+    <p>configure 파일을 이용해서 설치할 경로를 지정해주는 것</p>
+  </li>
+  <li>
+    <p>bash_profile 파일을 수정해서 명령어를 사용할 수 있도록 해주는 것</p>
+  </li>
+</ol>
+
+<p>대부분의 패키지는 다운 받고 압축을 풀면 configure 라는 파일이 있고 이 파일을 이용해서 설치에 대한 다양한 옵션을 설정해줄 수 있다. 예를 들어 설치할 패키지 폴더에서</p>
+
+<pre><code>./configure --prefix=/home/USERNAME/PACKAGE_NAME
+make &amp;&amp; make install
+</code></pre>
+
+<p>을 실행하면 1번 과정을 완료한 것이다. 위에 입력한 경로에 가보면 설치되어 있는 패키지를 확인할 수 있다. 하지만 이렇게 설치를 해도 아직 명령어를 사용할 수 없는 상태이다. 예를 들어 파이썬을 설치하는 중이라면</p>
+
+<pre><code>python setup.py
+</code></pre>
+
+<p>이라는 명령어를 실행시켰을 때</p>
+
+<pre><code>bash: python: command not found
+</code></pre>
+
+<p>이라는 에러 메시지를 만나게 된다는 뜻이다. 아직 리눅스는 이 명령어를 어떻게 실행시키는지 모르는 상태이고 우리는 리눅스에게 ‘이 명령어를 치면 어느 경로를 참조해야 하는지’를 알려줘야한다. 그래서 우리는 ~/.bash_profile 를 수정한다. 단순히 .bash_profile 마지막 줄에</p>
+
+<pre><code>PATH=$PATH:$HOME/PACKAGE_NAME/bin
+</code></pre>
+
+<p>을 추가하는 일로 끝나는 데 막상 이렇게 수정한 후에 명령어를 다시 입력해봐도 똑같은 에러 메시지를 만날 수 있다. 그 이유는 .bash_profile은 쉘이 시작될 때만 읽히기 때문인데 이를 위해서 우리는 .bash_profile을 다시 읽어와야 한다.</p>
+
+<pre><code>source ~/.bash_profile
+</code></pre>
+
+<p>이라는 명령어로 .bash_profile을 다시 읽어올 수 있고 이제 명령어를 사용해보면 정상적으로 실행됨을 알 수 있다.</p>
+
+
+	</section>
+
+  <footer class="post-footer">
+  <section class="author">
+    <h4>hjinu</h4>
+    <p></p>
+  </section>
+  <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=리눅스에서 루트 권한 없이 패키지 설치하는 방법&amp;url=http://hjinu.github.io/blog/2014/06/27/eba6aceb8885ec8aa4ec9790ec849c-eba3a8ed8ab8-eab68ced959c-ec9786ec9db4-ed8ca8ed82a4eca780-ec84a4ecb998ed9598eb8a94-ebb0a9ebb295/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://hjinu.github.io/blog/2014/06/27/eba6aceb8885ec8aa4ec9790ec849c-eba3a8ed8ab8-eab68ced959c-ec9786ec9db4-ed8ca8ed82a4eca780-ec84a4ecb998ed9598eb8a94-ebb0a9ebb295/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://hjinu.github.io/blog/2014/06/27/eba6aceb8885ec8aa4ec9790ec849c-eba3a8ed8ab8-eab68ced959c-ec9786ec9db4-ed8ca8ed82a4eca780-ec84a4ecb998ed9598eb8a94-ebb0a9ebb295/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+    </a>
+  </section>
+</footer>
+  <hr>
+  
+    <div class="share">
+</div>
+
+  
+  
+  <section id="comment">
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+  
+</article></main>
+  <footer class="site-footer"><a class="subscribe icon-feed" href="http://hjinu.github.io/atom.xml"><span class="tooltip">Subscribe!</span></a>
+
+
+<div class="inner">
+
+
+
+
+
+
+
+
+
+<section class="copyright">All content copyright <a href="/">hjinu</a> © 2014 • All rights reserved.</section>
+
+<section class="poweredby">Casper theme by <a class="icon-ghost" href="http://tryghost.org">Ghost</a> &amp; Published with <a href="http://octopress.org">Octopress</a></section>
+
+</div>
+</footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="//yandex.st/highlightjs/7.3/highlight.min.js"></script>  
+<script>hljs.initHighlightingOnLoad()</script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'hjinu';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://hjinu.github.io/blog/2014/06/27/eba6aceb8885ec8aa4ec9790ec849c-eba3a8ed8ab8-eab68ced959c-ec9786ec9db4-ed8ca8ed82a4eca780-ec84a4ecb998ed9598eb8a94-ebb0a9ebb295/';
+        var disqus_url = 'http://hjinu.github.io/blog/2014/06/27/eba6aceb8885ec8aa4ec9790ec849c-eba3a8ed8ab8-eab68ced959c-ec9786ec9db4-ed8ca8ed82a4eca780-ec84a4ecb998ed9598eb8a94-ebb0a9ebb295/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+</body>
+</html>
