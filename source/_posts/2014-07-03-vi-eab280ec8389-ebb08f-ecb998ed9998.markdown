@@ -1,0 +1,48 @@
+---
+author: hjinu
+comments: true
+date: 2014-07-03 09:52:45+00:00
+layout: post
+slug: vi-%ea%b2%80%ec%83%89-%eb%b0%8f-%ec%b9%98%ed%99%98
+title: Vi 검색 및 치환
+wordpress_id: 36
+categories:
+- 개발 일기
+tags:
+- command
+- shortcut
+- vi
+- vim
+---
+
+애초에 치환이라는 걸 잘 안쓰다가 sublime 쓰다가 Vi로 다시 넘어보니까 치환이 너무 필요했음...
+
+찾아보니까 너무 쉽고 편함. 아니 사실 쉽진않아.. 어쨌든 정리하면.
+
+
+### **검색**
+
+
+앞으로 검색 	: /KEYWORD
+
+뒤로 검색     	: ?KEYWORD
+
+다음 검색 결과 	: n
+
+이전 검색 결과 	: N
+
+
+### **치환**
+
+
+현재 라인에서 첫 번째 결과만 치환   :  s/OLD/NEW
+
+현재 라인에서 모든 결과 치환        :  s/OLD/NEW/g
+
+라인에서 라인 사이를 모두 치환      :  #,*s/OLD/NEW/g
+
+파일 내의 모든 결과를 치환          :  %s/OLD/NEW/g
+
+
+
+출처는 요기 : http://www.felixgers.de/teaching/emacs/vi_search_replace.html

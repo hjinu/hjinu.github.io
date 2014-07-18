@@ -1,0 +1,44 @@
+---
+author: hjinu
+comments: true
+date: 2014-07-03 12:03:14+00:00
+layout: post
+slug: github%ec%97%90%ec%84%9c-gem-%ec%84%a4%ec%b9%98%ed%95%98%ea%b8%b0
+title: github에서 gem 설치하기
+wordpress_id: 46
+categories:
+- 개발 일기
+- Ruby
+tags:
+- gem
+- gemspec
+- git
+- github
+- ruby
+---
+
+dalli 소스를 분석하던 도중 소스를 약간 수정하려고 fork를 해왔는데 이 fork한 gem을 어떻게 설치해야 하는지 몰라서 당황했음.
+
+방법을 좀 찾아보니 git을 클론해와서 gem을 다시 빌드, 설치하면 되는데 정리해보겠음.
+
+1. git을 클론
+
+    
+    git clone https://github.com/hjinu/dalli.git
+
+
+2. gem을 빌드
+
+    
+    cd dalli && gem bulid dalli.gemspec
+
+
+3. gem을 인스톨
+
+    
+    gem install dalli-2.7.2.gem
+
+
+
+
+출처는 요기 : http://stackoverflow.com/questions/16365146/install-ruby-gem-globally-from-github-repository

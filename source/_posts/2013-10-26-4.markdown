@@ -1,0 +1,38 @@
+---
+author: hjinu
+comments: true
+date: 2013-10-26 20:54:07+00:00
+layout: post
+published: false
+slug: '4'
+title: Code test
+wordpress_id: 4
+post_format:
+- Aside
+---
+
+[code language="ruby"]
+
+&lt;h1&gt;Listing posts&lt;/h1&gt;
+&lt;%= link_to 'New Post', new_post_path %&gt;
+
+&lt;table&gt;
+ &lt;tr&gt;
+ &lt;th&gt;Title&lt;/th&gt;
+ &lt;th&gt;Text&lt;/th&gt;
+ &lt;/tr&gt;
+
+&lt;% @posts.each do |post| %&gt;
+&lt;tr&gt;
+ &lt;td&gt;&lt;%= post.title %&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;%= post.text %&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;%= link_to 'Show', post_path %&gt;&lt;/td&gt;
+ &lt;td&gt;&lt;%= link_to 'Edit', edit_post_path(post) %&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;% end %&gt;
+
+&lt;/table&gt;
+
+&amp;nbsp;
+
+[/code]
