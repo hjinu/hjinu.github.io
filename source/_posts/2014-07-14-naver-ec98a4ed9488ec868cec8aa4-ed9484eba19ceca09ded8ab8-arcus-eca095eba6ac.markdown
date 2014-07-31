@@ -10,6 +10,8 @@ wordpress_id: 61
 
 네이버에서 오픈 소스 프로젝트로 공개한 Arcus를 공부하면서 알게 된 Arcus의 특징 몇가지를 정리함.
 
+<!-- More -->
+
 ##### - Zookeeper 사용
 
 
