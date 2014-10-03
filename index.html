@@ -9,7 +9,8 @@
 
 	<meta name="author" content="hjinu">
 	
-	<meta name="description" content="23 Jul 2014 Memcached 정리 memcached를 공부하면서 정리. memcached 실행옵션 -m : 캐시의 최대 메모리 사이즈(MB)를 지정한다. -M : 캐시에 지정된 메모리 이상의 데이터가 들어오면 LRU 정책으로 삭제하는 대신 에러를 &hellip;">
+	<meta name="description" content="09 Sep 2014 Nokogiri Gem 설치 문제 rubber gem 설치를 하는 도중 nokogiri에 디펜던시가 있어서 nokogiri gem도 설치했어야 했는데
+gem이 설치되어 있는데도 불구하고 bundle install 실행 시에 계속 gem을 깔라는 &hellip;">
 
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="MobileOptimized" content="320" />
@@ -42,6 +43,27 @@
 		
 	
 	<header class="post-header">
+		<span class="post-meta">09 Sep 2014</span>
+		<h2 class="post-title">
+			
+			<a href="/blog/2014/09/09/nokogirseolci-munje/">
+			
+				Nokogiri Gem 설치 문제</a>
+		</h2>
+	</header>
+	<section class="post-excerpt">
+		<p>rubber gem 설치를 하는 도중 nokogiri에 디펜던시가 있어서 nokogiri gem도 설치했어야 했는데
+gem이 설치되어 있는데도 불구하고 bundle install 실행 시에 계속 gem을 깔라는 오류가 떠서 
+거의 이틀동안 구글에 있는 모든 해결 방법을 다 해봤는데 고칠 수 없었고…</p>
+
+
+	</section>
+</article>
+
+
+    <article class="post">
+	
+	<header class="post-header">
 		<span class="post-meta">23 Jul 2014</span>
 		<h2 class="post-title">
 			
@@ -54,32 +76,12 @@
 		<p>memcached를 공부하면서 정리.</p>
 
 <ol>
-  <li>memcached 실행옵션</li>
+  <li>Chunk와 Slab란</li>
 </ol>
 
-<p>-m : 캐시의 최대 메모리 사이즈(MB)를 지정한다.</p>
-
-<p>-M : 캐시에 지정된 메모리 이상의 데이터가 들어오면 LRU 정책으로 삭제하는 대신 에러를 리턴하도록 한다.</p>
-
-<p>-c : 접속할 수 있는 최대 연결 수를 지정한다. (기본 값 : 1024)</p>
-
-<p>-f : Chunk 사이즈의 증가 비율을 지정한다.</p>
-
-<p>-I : Slab의 기본 사이즈를 지정한다. (기본값 : 1MB, 범위 : 1kB - 128MB)</p>
-
-<ul>
-  <li>Chunk와 Slab란</li>
-</ul>
-
-<p>memcached에서 key, value를 저장하는 크기는 기본값은 48kB이고 이 데이터를 Chunk이라는 단위에 할당한다. Chunk 한개에는  한쌍의 key, value를 담기때문에 60kB의 Chunk에 48kb의 K-V 데이터가 들어가면 12kB는 빈공간으로 낭비된다.</p>
+<p>memcached에서 key, value를 저장하는 크기는 이 데이터를 Chunk이라는 단위에 할당한다. (기본값 48kB) Chunk 한개에는  한쌍의 key, value를 담기때문에 60kB의 Chunk에 48kb의 K-V 데이터가 들어가면 12kB는 빈공간으로 낭비된다.</p>
 
 <p>Chunk는 다시 Slab이라는 단위로 묶이는데 이 Slab의 기본 값은 1MB이다. Slab의 Chunk의 사이즈 별로 Class가 나뉘는데 이 Chuck의 사이즈는 factor 크기만큼 곱해지면서 커진다. 기본 Chunk의 사이즈가 48kB이고 factor가 1.25라면 기본 Chunk 사이즈를 가지는 Slab이 class 1이고 다음 사이즈인 48*1.25=60kB의 Chunk를 가지는 Slab이 class 2이다.</p>
-
-<p>그래서 item이 메모리에 할당될 때 memcached는 item에 맞는 적절한 Chunk사이즈를 가지고 있는 Slab class를 찾고 그 Slab에  item을 할당한다. 이렇게 할당되기 때문에 item이 할당될 때 메모리가 부족하다면 전체에서 LRU를 실행하는 것이 아닌 item이 들어갈 Slab class 내에서만 LRU를 실행한다.</p>
-
-<p>-n : 아이템 하나가 사용할 최소 크기를 지정한다. ‘키 + 값 + 속성 값’의 최소 크기가 된다. (기본값 : 48)</p>
-
-<p>-t : 프로토콜 파싱에 사용할 스레스 수를 지정한다. 프로토콜을 파싱할 때만 사용되고 데이터를 읽고 저장할 때에는 pthread에 의해 하나만 접근할 수 있다. (기본값 : 4)</p>
 
 
 	</section>
@@ -100,39 +102,6 @@
 	<section class="post-excerpt">
 		<p>네이버에서 오픈 소스 프로젝트로 공개한 Arcus를 공부하면서 알게 된 Arcus의 특징 몇가지를 정리함.</p>
 
-<h5 id="zookeeper-">- Zookeeper 사용</h5>
-
-<ul>
-  <li>
-    <p>서버를 관리하기 위해서 Zookeeper를 사용. 서버의 추가나 장애 발생 시 대응에 용이.</p>
-  </li>
-  <li>
-    <p>서버가 켜질 때엔 Zookeeper에 IP:PORT로 검색해서 자신이 서비스되어야할 코드를 찾고 이 코드에 ephemeral node를 생성. ephemeral node는 세션이 유효한 동안만 살아있기 때문에 만약에 서버에 문제가 생겨서 세션이 종료되면 node가 사라지고 이를 바탕으로 캐시 데이터의 재분배가 가능.</p>
-  </li>
-</ul>
-
-<h5 id="eager-item-expiration">- Eager Item Expiration</h5>
-
-<ul>
-  <li>
-    <p>기존의 메모리 관리 방식에서는 LRU가 실행되면 Tail에 위치한 N개의 item만 검사한다. 이 방식에 문제점이 있는데 이는 memcached의 expired된 아이템을 삭제하는 방식과 관련되어 있음.</p>
-  </li>
-  <li>
-    <p>memcached는 item의 expired_time이 지나면 바로 메모리에서 지우는 것이 아니라 expired된 아이템에 get 요청을 했을 때 ‘Item이 없다’ 라고 응답하고 item을 지우기 때문.</p>
-  </li>
-  <li>
-    <p>그래서 Tail에 위치한 N개의 item만을 검사하면 이미 expired된 item이 있음에도 불구하고 다른 item이 evict될 수 있다. 또한 expired된 item이 메모리에 계속 올라가 있기 때문에 메모리 사용량을 확인하는 데에도 어려움.</p>
-  </li>
-  <li>
-    <p>Eager Item Expiration은 이 문제를 해결하기 위해서 Tail에 위치한 N개의 item 이 외에도 <strong>LRU 리스트를 점진적으로 traverse하면서 N개의 item을 검사</strong>한다.</p>
-  </li>
-</ul>
-
-<h5 id="collection-">- Collection 지원</h5>
-
-<ul>
-  <li>네이버 서비스 중에서 feed를 제공하는 서비스의 요구사항에 맞춘 데이터 구조</li>
-</ul>
 
 	</section>
 </article>
@@ -154,25 +123,6 @@
 
 <p>방법을 좀 찾아보니 git을 클론해와서 gem을 다시 빌드, 설치하면 되는데 정리해보겠음.</p>
 
-<ol>
-  <li>
-    <p>git을 클론</p>
-
-    <p>git clone https://github.com/hjinu/dalli.git</p>
-  </li>
-  <li>
-    <p>gem을 빌드</p>
-
-    <p>cd dalli &amp;&amp; gem bulid dalli.gemspec</p>
-  </li>
-  <li>
-    <p>gem을 인스톨</p>
-
-    <p>gem install dalli-2.7.2.gem</p>
-  </li>
-</ol>
-
-<p>출처는 요기 : http://stackoverflow.com/questions/16365146/install-ruby-gem-globally-from-github-repository</p>
 
 	</section>
 </article>
@@ -194,27 +144,6 @@
 
 <p>찾아보니까 너무 쉽고 편함. 아니 사실 쉽진않아.. 어쨌든 정리하면.</p>
 
-<h3 id="section"><strong>검색</strong></h3>
-
-<p>앞으로 검색 	: /KEYWORD</p>
-
-<p>뒤로 검색     	: ?KEYWORD</p>
-
-<p>다음 검색 결과 	: n</p>
-
-<p>이전 검색 결과 	: N</p>
-
-<h3 id="section-1"><strong>치환</strong></h3>
-
-<p>현재 라인에서 첫 번째 결과만 치환   :  s/OLD/NEW</p>
-
-<p>현재 라인에서 모든 결과 치환        :  s/OLD/NEW/g</p>
-
-<p>라인에서 라인 사이를 모두 치환      :  #,*s/OLD/NEW/g</p>
-
-<p>파일 내의 모든 결과를 치환          :  %s/OLD/NEW/g</p>
-
-<p>출처는 요기 : http://www.felixgers.de/teaching/emacs/vi_search_replace.html</p>
 
 	</section>
 </article>
@@ -236,7 +165,6 @@
 
 <p>튜토리얼은 따라 하는 거라서 리팩토링을 할 일이 없어서 별로 필요성을 못 느꼈었는데 새삼 대단한 걸 느끼고 계속 테스트를 작성하는 버릇을 들여야겠다고 생각함. 유닛 단위의 테스트가 크게 의미있다기 보다는 그 테스트들이 점점 쌓여서 소프트웨어의 무결성을 보장한다는 점이 참 대단. 젤리버스에서 일 할 때도 추후에 수정한 부분이 예상치 못한 부분을 건드려서 버그를 만드는 경우가 많았는데 이런 점을 대부분 막을 수 있을 것 같다. </p>
 
-<p>git 으로 버전관리 + 테스트 작성으로 맘에 안드는 부분이 있으면 그냥 가벼운 마음으로 브랜치해서 테스트 통과하는 지만 보면서 과감하게 들어엎는 리팩토링을 할 수 있을 거라고 생각하니 뭔가 두근두근</p>
 
 	</section>
 </article>
@@ -266,45 +194,6 @@
 </ol>
 
 <p>그래서 루트 권한이 없을 때에는 내가 권한을 모두 가지고 있는 홈 폴더에 설치해야 하는데 이 방법을 적는다.</p>
-
-<p>내 홈폴더에 설치하는 과정은 밑에 두 가지 나눌 수 있다.</p>
-
-<ol>
-  <li>
-    <p>configure 파일을 이용해서 설치할 경로를 지정해주는 것</p>
-  </li>
-  <li>
-    <p>bash_profile 파일을 수정해서 명령어를 사용할 수 있도록 해주는 것</p>
-  </li>
-</ol>
-
-<p>대부분의 패키지는 다운 받고 압축을 풀면 configure 라는 파일이 있고 이 파일을 이용해서 설치에 대한 다양한 옵션을 설정해줄 수 있다. 예를 들어 설치할 패키지 폴더에서</p>
-
-<pre><code>./configure --prefix=/home/USERNAME/PACKAGE_NAME
-make &amp;&amp; make install
-</code></pre>
-
-<p>을 실행하면 1번 과정을 완료한 것이다. 위에 입력한 경로에 가보면 설치되어 있는 패키지를 확인할 수 있다. 하지만 이렇게 설치를 해도 아직 명령어를 사용할 수 없는 상태이다. 예를 들어 파이썬을 설치하는 중이라면</p>
-
-<pre><code>python setup.py
-</code></pre>
-
-<p>이라는 명령어를 실행시켰을 때</p>
-
-<pre><code>bash: python: command not found
-</code></pre>
-
-<p>이라는 에러 메시지를 만나게 된다는 뜻이다. 아직 리눅스는 이 명령어를 어떻게 실행시키는지 모르는 상태이고 우리는 리눅스에게 ‘이 명령어를 치면 어느 경로를 참조해야 하는지’를 알려줘야한다. 그래서 우리는 ~/.bash_profile 를 수정한다. 단순히 .bash_profile 마지막 줄에</p>
-
-<pre><code>PATH=$PATH:$HOME/PACKAGE_NAME/bin
-</code></pre>
-
-<p>을 추가하는 일로 끝나는 데 막상 이렇게 수정한 후에 명령어를 다시 입력해봐도 똑같은 에러 메시지를 만날 수 있다. 그 이유는 .bash_profile은 쉘이 시작될 때만 읽히기 때문인데 이를 위해서 우리는 .bash_profile을 다시 읽어와야 한다.</p>
-
-<pre><code>source ~/.bash_profile
-</code></pre>
-
-<p>이라는 명령어로 .bash_profile을 다시 읽어올 수 있고 이제 명령어를 사용해보면 정상적으로 실행됨을 알 수 있다.</p>
 
 
 	</section>

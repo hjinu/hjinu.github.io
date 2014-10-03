@@ -4,7 +4,7 @@
   <title><![CDATA[hjinu]]></title>
   <link href="http://hjinu.github.io/atom.xml" rel="self"/>
   <link href="http://hjinu.github.io/"/>
-  <updated>2014-07-23T16:52:55+09:00</updated>
+  <updated>2014-09-09T19:37:19+09:00</updated>
   <id>http://hjinu.github.io/</id>
   <author>
     <name><![CDATA[hjinu]]></name>
@@ -14,11 +14,39 @@
 
   
   <entry>
+    <title type="html"><![CDATA[nokogiri gem 설치 문제]]></title>
+    <link href="http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/"/>
+    <updated>2014-09-09T19:31:41+09:00</updated>
+    <id>http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje</id>
+    <content type="html"><![CDATA[<p>rubber gem 설치를 하는 도중 nokogiri에 디펜던시가 있어서 nokogiri gem도 설치했어야 했는데
+gem이 설치되어 있는데도 불구하고 bundle install 실행 시에 계속 gem을 깔라는 오류가 떠서 
+거의 이틀동안 구글에 있는 모든 해결 방법을 다 해봤는데 고칠 수 없었고…</p>
+
+<!-- More -->
+
+<p>ruby 버전을 2.0.0으로 바꿨더니 모두 해결되었다… 
+앞으로 최신 버전에 대해서 보수적으로 대할 것 같다..</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[memcached 정리]]></title>
     <link href="http://hjinu.github.io/blog/2014/07/23/memcached-jeongri/"/>
     <updated>2014-07-23T16:34:02+09:00</updated>
     <id>http://hjinu.github.io/blog/2014/07/23/memcached-jeongri</id>
     <content type="html"><![CDATA[<p>memcached를 공부하면서 정리.</p>
+
+<ol>
+  <li>Chunk와 Slab란</li>
+</ol>
+
+<p>memcached에서 key, value를 저장하는 크기는 이 데이터를 Chunk이라는 단위에 할당한다. (기본값 48kB) Chunk 한개에는  한쌍의 key, value를 담기때문에 60kB의 Chunk에 48kb의 K-V 데이터가 들어가면 12kB는 빈공간으로 낭비된다.</p>
+
+<p>Chunk는 다시 Slab이라는 단위로 묶이는데 이 Slab의 기본 값은 1MB이다. Slab의 Chunk의 사이즈 별로 Class가 나뉘는데 이 Chuck의 사이즈는 factor 크기만큼 곱해지면서 커진다. 기본 Chunk의 사이즈가 48kB이고 factor가 1.25라면 기본 Chunk 사이즈를 가지는 Slab이 class 1이고 다음 사이즈인 48*1.25=60kB의 Chunk를 가지는 Slab이 class 2이다.</p>
+
+<!-- more -->
+
+<p>그래서 item이 메모리에 할당될 때 memcached는 item에 맞는 적절한 Chunk사이즈를 가지고 있는 Slab class를 찾고 그 Slab에  item을 할당한다. 이렇게 할당되기 때문에 item이 할당될 때 메모리가 부족하다면 전체에서 LRU를 실행하는 것이 아닌 item이 들어갈 Slab class 내에서만 LRU를 실행한다.</p>
 
 <ol>
   <li>memcached 실행옵션</li>
@@ -34,19 +62,13 @@
 
 <p>-I : Slab의 기본 사이즈를 지정한다. (기본값 : 1MB, 범위 : 1kB - 128MB)</p>
 
-<ul>
-  <li>Chunk와 Slab란</li>
-</ul>
-
-<p>memcached에서 key, value를 저장하는 크기는 기본값은 48kB이고 이 데이터를 Chunk이라는 단위에 할당한다. Chunk 한개에는  한쌍의 key, value를 담기때문에 60kB의 Chunk에 48kb의 K-V 데이터가 들어가면 12kB는 빈공간으로 낭비된다.</p>
-
-<p>Chunk는 다시 Slab이라는 단위로 묶이는데 이 Slab의 기본 값은 1MB이다. Slab의 Chunk의 사이즈 별로 Class가 나뉘는데 이 Chuck의 사이즈는 factor 크기만큼 곱해지면서 커진다. 기본 Chunk의 사이즈가 48kB이고 factor가 1.25라면 기본 Chunk 사이즈를 가지는 Slab이 class 1이고 다음 사이즈인 48*1.25=60kB의 Chunk를 가지는 Slab이 class 2이다.</p>
-
-<p>그래서 item이 메모리에 할당될 때 memcached는 item에 맞는 적절한 Chunk사이즈를 가지고 있는 Slab class를 찾고 그 Slab에  item을 할당한다. 이렇게 할당되기 때문에 item이 할당될 때 메모리가 부족하다면 전체에서 LRU를 실행하는 것이 아닌 item이 들어갈 Slab class 내에서만 LRU를 실행한다.</p>
-
 <p>-n : 아이템 하나가 사용할 최소 크기를 지정한다. ‘키 + 값 + 속성 값’의 최소 크기가 된다. (기본값 : 48)</p>
 
 <p>-t : 프로토콜 파싱에 사용할 스레스 수를 지정한다. 프로토콜을 파싱할 때만 사용되고 데이터를 읽고 저장할 때에는 pthread에 의해 하나만 접근할 수 있다. (기본값 : 4)</p>
+
+<ol>
+  <li>memcached 스레드에 대하여</li>
+</ol>
 
 ]]></content>
   </entry>
@@ -57,6 +79,8 @@
     <updated>2014-07-14T18:48:33+09:00</updated>
     <id>http://hjinu.github.io/blog/2014/07/14/naver-ec98a4ed9488ec868cec8aa4-ed9484eba19ceca09ded8ab8-arcus-eca095eba6ac</id>
     <content type="html"><![CDATA[<p>네이버에서 오픈 소스 프로젝트로 공개한 Arcus를 공부하면서 알게 된 Arcus의 특징 몇가지를 정리함.</p>
+
+<!-- More -->
 
 <h5 id="zookeeper-">- Zookeeper 사용</h5>
 
@@ -103,6 +127,8 @@
 
 <p>방법을 좀 찾아보니 git을 클론해와서 gem을 다시 빌드, 설치하면 되는데 정리해보겠음.</p>
 
+<!-- More -->
+
 <ol>
   <li>
     <p>git을 클론</p>
@@ -133,6 +159,8 @@
     <content type="html"><![CDATA[<p>애초에 치환이라는 걸 잘 안쓰다가 sublime 쓰다가 Vi로 다시 넘어보니까 치환이 너무 필요했음…</p>
 
 <p>찾아보니까 너무 쉽고 편함. 아니 사실 쉽진않아.. 어쨌든 정리하면.</p>
+
+<!-- More -->
 
 <h3 id="section"><strong>검색</strong></h3>
 
@@ -167,6 +195,7 @@
 
 <p>튜토리얼은 따라 하는 거라서 리팩토링을 할 일이 없어서 별로 필요성을 못 느꼈었는데 새삼 대단한 걸 느끼고 계속 테스트를 작성하는 버릇을 들여야겠다고 생각함. 유닛 단위의 테스트가 크게 의미있다기 보다는 그 테스트들이 점점 쌓여서 소프트웨어의 무결성을 보장한다는 점이 참 대단. 젤리버스에서 일 할 때도 추후에 수정한 부분이 예상치 못한 부분을 건드려서 버그를 만드는 경우가 많았는데 이런 점을 대부분 막을 수 있을 것 같다. </p>
 
+<!-- More -->
 <p>git 으로 버전관리 + 테스트 작성으로 맘에 안드는 부분이 있으면 그냥 가벼운 마음으로 브랜치해서 테스트 통과하는 지만 보면서 과감하게 들어엎는 리팩토링을 할 수 있을 거라고 생각하니 뭔가 두근두근</p>
 ]]></content>
   </entry>
@@ -188,6 +217,8 @@
 </ol>
 
 <p>그래서 루트 권한이 없을 때에는 내가 권한을 모두 가지고 있는 홈 폴더에 설치해야 하는데 이 방법을 적는다.</p>
+
+<!-- More -->
 
 <p>내 홈폴더에 설치하는 과정은 밑에 두 가지 나눌 수 있다.</p>
 

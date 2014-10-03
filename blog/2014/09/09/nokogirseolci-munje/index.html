@@ -5,11 +5,12 @@
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta charset="utf-8">
-	<title>Vi 검색 및 치환 | hjinu</title>
+	<title>nokogiri gem 설치 문제 | hjinu</title>
 
 	<meta name="author" content="hjinu">
 	
-	<meta name="description" content="hjinu 03 Jul 2014 Vi 검색 및 치환 애초에 치환이라는 걸 잘 안쓰다가 sublime 쓰다가 Vi로 다시 넘어보니까 치환이 너무 필요했음… 찾아보니까 너무 쉽고 편함. 아니 사실 쉽진않아.. 어쨌든 정리하면. 검색 앞으로 검색 : /KEYWORD 뒤로 &hellip;">
+	<meta name="description" content="hjinu 09 Sep 2014 Nokogiri Gem 설치 문제 rubber gem 설치를 하는 도중 nokogiri에 디펜던시가 있어서 nokogiri gem도 설치했어야 했는데
+gem이 설치되어 있는데도 불구하고 bundle install 실행 시에 계속 &hellip;">
 
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="MobileOptimized" content="320" />
@@ -29,37 +30,18 @@
 	<header class="post-header">
 		<a id="blog-logo" href="/">hjinu</a>
 	</header>
-	<span class="post-meta">03 Jul 2014</span>
-	<h1 class="post-title">Vi 검색 및 치환</h1>
+	<span class="post-meta">09 Sep 2014</span>
+	<h1 class="post-title">Nokogiri Gem 설치 문제</h1>
 
 	<section class="post-content">
-		<p>애초에 치환이라는 걸 잘 안쓰다가 sublime 쓰다가 Vi로 다시 넘어보니까 치환이 너무 필요했음…</p>
-
-<p>찾아보니까 너무 쉽고 편함. 아니 사실 쉽진않아.. 어쨌든 정리하면.</p>
+		<p>rubber gem 설치를 하는 도중 nokogiri에 디펜던시가 있어서 nokogiri gem도 설치했어야 했는데
+gem이 설치되어 있는데도 불구하고 bundle install 실행 시에 계속 gem을 깔라는 오류가 떠서 
+거의 이틀동안 구글에 있는 모든 해결 방법을 다 해봤는데 고칠 수 없었고…</p>
 
 <!-- More -->
 
-<h3 id="section"><strong>검색</strong></h3>
-
-<p>앞으로 검색 	: /KEYWORD</p>
-
-<p>뒤로 검색     	: ?KEYWORD</p>
-
-<p>다음 검색 결과 	: n</p>
-
-<p>이전 검색 결과 	: N</p>
-
-<h3 id="section-1"><strong>치환</strong></h3>
-
-<p>현재 라인에서 첫 번째 결과만 치환   :  s/OLD/NEW</p>
-
-<p>현재 라인에서 모든 결과 치환        :  s/OLD/NEW/g</p>
-
-<p>라인에서 라인 사이를 모두 치환      :  #,*s/OLD/NEW/g</p>
-
-<p>파일 내의 모든 결과를 치환          :  %s/OLD/NEW/g</p>
-
-<p>출처는 요기 : http://www.felixgers.de/teaching/emacs/vi_search_replace.html</p>
+<p>ruby 버전을 2.0.0으로 바꿨더니 모두 해결되었다… 
+앞으로 최신 버전에 대해서 보수적으로 대할 것 같다..</p>
 
 	</section>
 
@@ -70,13 +52,13 @@
   </section>
   <section class="share">
     <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?text=Vi 검색 및 치환&amp;url=http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <a class="icon-twitter" href="http://twitter.com/share?text=nokogiri gem 설치 문제&amp;url=http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
       <span class="hidden">Twitter</span>
     </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
       <span class="hidden">Facebook</span>
     </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
       <span class="hidden">Google+</span>
     </a>
   </section>
@@ -123,8 +105,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998/';
-        var disqus_url = 'http://hjinu.github.io/blog/2014/07/03/vi-eab280ec8389-ebb08f-ecb998ed9998/';
+        var disqus_identifier = 'http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/';
+        var disqus_url = 'http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/';
         var disqus_script = 'embed.js';
       
     (function () {
