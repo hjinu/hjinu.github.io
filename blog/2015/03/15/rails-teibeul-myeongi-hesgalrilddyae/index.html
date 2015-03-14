@@ -33,8 +33,11 @@
 	<h1 class="post-title">[Rails] 테이블 명이 헷갈릴 때</h1>
 
 	<section class="post-content">
-		<p>이번에 만드는 테이블 중에 <code>LessonData</code>라는 이름의 테이블을 만들어야 했는데 이 경우에 Model 명을 어떻게 지어야 하는 지 헷갈렸다. 모델명이 <code>LessonDatum</code>이 되어야하는지 테이블 명이 <code>LessonDatas</code>가 되고 모델명이 <code>LessonData</code>가 되어야하는 지 헷갈렸는데 일단 결론부터 말하자면 테이블 명을 <code>LessonData</code>, 모델명을 <code>LessonDatum</code>으로 하는 것이 맞았다.
- 영어에 익숙하지 않아서 Rails의 복수화 컨벤션이 헷갈리는 부분이 있는데 이럴 때에는 <a href="https://github.com/rails/rails/blob/feaa6e2048fe86bcf07e967d6e47b865e42e055b/activesupport/lib/active_support/inflector/methods.rb"><code>Rails::ActiveSupport::Inflector</code></a>에 있는 메써드를 참고하면 된다. </p>
+		<p>이번에 만드는 테이블 중에 <code>LessonData</code>라는 이름의 테이블을 만들어야 했는데 이 경우에 Model 명을 어떻게 지어야 하는 지 헷갈렸다. 모델명이 <code>LessonDatum</code>이 되어야하는지 테이블 명이 <code>LessonDatas</code>가 되고 모델명이 <code>LessonData</code>가 되어야하는 지 헷갈렸는데 일단 결론부터 말하자면 테이블 명을 <code>LessonData</code>, 모델명을 <code>LessonDatum</code>으로 하는 것이 맞았다.</p>
+
+<!-- more -->
+
+<p>영어에 익숙하지 않아서 Rails의 복수화 컨벤션이 헷갈리는 부분이 있는데 이럴 때에는 <a href="https://github.com/rails/rails/blob/feaa6e2048fe86bcf07e967d6e47b865e42e055b/activesupport/lib/active_support/inflector/methods.rb"><code>Rails::ActiveSupport::Inflector</code></a>에 있는 메써드를 참고하면 된다. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>

@@ -51,78 +51,8 @@
 		</h2>
 	</header>
 	<section class="post-excerpt">
-		<p>이번에 만드는 테이블 중에 <code>LessonData</code>라는 이름의 테이블을 만들어야 했는데 이 경우에 Model 명을 어떻게 지어야 하는 지 헷갈렸다. 모델명이 <code>LessonDatum</code>이 되어야하는지 테이블 명이 <code>LessonDatas</code>가 되고 모델명이 <code>LessonData</code>가 되어야하는 지 헷갈렸는데 일단 결론부터 말하자면 테이블 명을 <code>LessonData</code>, 모델명을 <code>LessonDatum</code>으로 하는 것이 맞았다.
- 영어에 익숙하지 않아서 Rails의 복수화 컨벤션이 헷갈리는 부분이 있는데 이럴 때에는 <a href="https://github.com/rails/rails/blob/feaa6e2048fe86bcf07e967d6e47b865e42e055b/activesupport/lib/active_support/inflector/methods.rb"><code>Rails::ActiveSupport::Inflector</code></a>에 있는 메써드를 참고하면 된다. </p>
+		<p>이번에 만드는 테이블 중에 <code>LessonData</code>라는 이름의 테이블을 만들어야 했는데 이 경우에 Model 명을 어떻게 지어야 하는 지 헷갈렸다. 모델명이 <code>LessonDatum</code>이 되어야하는지 테이블 명이 <code>LessonDatas</code>가 되고 모델명이 <code>LessonData</code>가 되어야하는 지 헷갈렸는데 일단 결론부터 말하자면 테이블 명을 <code>LessonData</code>, 모델명을 <code>LessonDatum</code>으로 하는 것이 맞았다.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="c1"># Create the name of a table like Rails does for models to table names. This</span>
-</span><span class="line"><span class="c1"># method uses the +pluralize+ method on the last word in the string.</span>
-</span><span class="line"><span class="c1">#</span>
-</span><span class="line"><span class="c1">#   &#39;RawScaledScorer&#39;.tableize # =&gt; &quot;raw_scaled_scorers&quot;</span>
-</span><span class="line"><span class="c1">#   &#39;egg_and_ham&#39;.tableize     # =&gt; &quot;egg_and_hams&quot;</span>
-</span><span class="line"><span class="c1">#   &#39;fancyCategory&#39;.tableize   # =&gt; &quot;fancy_categories&quot;</span>
-</span><span class="line"><span class="k">def</span> <span class="nf">tableize</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
-</span><span class="line">  <span class="n">pluralize</span><span class="p">(</span><span class="n">underscore</span><span class="p">(</span><span class="n">class_name</span><span class="p">))</span>
-</span><span class="line"><span class="k">end</span>
-</span><span class="line">
-</span><span class="line"><span class="c1"># Create a class name from a plural table name like Rails does for table</span>
-</span><span class="line"><span class="c1"># names to models. Note that this returns a string and not a Class (To</span>
-</span><span class="line"><span class="c1"># convert to an actual class follow +classify+ with +constantize+).</span>
-</span><span class="line"><span class="c1">#</span>
-</span><span class="line"><span class="c1">#   &#39;egg_and_hams&#39;.classify # =&gt; &quot;EggAndHam&quot;</span>
-</span><span class="line"><span class="c1">#   &#39;posts&#39;.classify        # =&gt; &quot;Post&quot;</span>
-</span><span class="line"><span class="c1">#</span>
-</span><span class="line"><span class="c1"># Singular names are not handled correctly:</span>
-</span><span class="line"><span class="c1">#</span>
-</span><span class="line"><span class="c1">#   &#39;business&#39;.classify     # =&gt; &quot;Busines&quot;</span>
-</span><span class="line"><span class="k">def</span> <span class="nf">classify</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
-</span><span class="line">  <span class="c1"># strip out any leading schema name</span>
-</span><span class="line">  <span class="n">camelize</span><span class="p">(</span><span class="n">singularize</span><span class="p">(</span><span class="n">table_name</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sr">/.*\./</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)))</span>
-</span><span class="line"><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>위의 코드와 같이 <code>#tableize</code>와 <code>#classify</code>를 이용하면 쉽게 네이밍할 수 있다.</p>
-
-	</section>
-</article>
-
-
-    <article class="post">
-	
-	<header class="post-header">
-		<span class="post-meta">15 Mar 2015</span>
-		<h2 class="post-title">
-			
-			<a href="/blog/2015/03/15/rails/">
-			
-				[Rails</a>
-		</h2>
-	</header>
-	<section class="post-excerpt">
-		
 
 	</section>
 </article>

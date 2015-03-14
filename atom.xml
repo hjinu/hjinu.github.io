@@ -4,7 +4,7 @@
   <title><![CDATA[hjinu]]></title>
   <link href="http://hjinu.github.io/atom.xml" rel="self"/>
   <link href="http://hjinu.github.io/"/>
-  <updated>2015-03-15T03:41:42+09:00</updated>
+  <updated>2015-03-15T03:44:48+09:00</updated>
   <id>http://hjinu.github.io/</id>
   <author>
     <name><![CDATA[hjinu]]></name>
@@ -18,8 +18,11 @@
     <link href="http://hjinu.github.io/blog/2015/03/15/rails-teibeul-myeongi-hesgalrilddyae/"/>
     <updated>2015-03-15T03:32:28+09:00</updated>
     <id>http://hjinu.github.io/blog/2015/03/15/rails-teibeul-myeongi-hesgalrilddyae</id>
-    <content type="html"><![CDATA[<p>이번에 만드는 테이블 중에 <code>LessonData</code>라는 이름의 테이블을 만들어야 했는데 이 경우에 Model 명을 어떻게 지어야 하는 지 헷갈렸다. 모델명이 <code>LessonDatum</code>이 되어야하는지 테이블 명이 <code>LessonDatas</code>가 되고 모델명이 <code>LessonData</code>가 되어야하는 지 헷갈렸는데 일단 결론부터 말하자면 테이블 명을 <code>LessonData</code>, 모델명을 <code>LessonDatum</code>으로 하는 것이 맞았다.
- 영어에 익숙하지 않아서 Rails의 복수화 컨벤션이 헷갈리는 부분이 있는데 이럴 때에는 <a href="https://github.com/rails/rails/blob/feaa6e2048fe86bcf07e967d6e47b865e42e055b/activesupport/lib/active_support/inflector/methods.rb"><code>Rails::ActiveSupport::Inflector</code></a>에 있는 메써드를 참고하면 된다. </p>
+    <content type="html"><![CDATA[<p>이번에 만드는 테이블 중에 <code>LessonData</code>라는 이름의 테이블을 만들어야 했는데 이 경우에 Model 명을 어떻게 지어야 하는 지 헷갈렸다. 모델명이 <code>LessonDatum</code>이 되어야하는지 테이블 명이 <code>LessonDatas</code>가 되고 모델명이 <code>LessonData</code>가 되어야하는 지 헷갈렸는데 일단 결론부터 말하자면 테이블 명을 <code>LessonData</code>, 모델명을 <code>LessonDatum</code>으로 하는 것이 맞았다.</p>
+
+<!-- more -->
+
+<p>영어에 익숙하지 않아서 Rails의 복수화 컨벤션이 헷갈리는 부분이 있는데 이럴 때에는 <a href="https://github.com/rails/rails/blob/feaa6e2048fe86bcf07e967d6e47b865e42e055b/activesupport/lib/active_support/inflector/methods.rb"><code>Rails::ActiveSupport::Inflector</code></a>에 있는 메써드를 참고하면 된다. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -76,15 +79,6 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[[Rails]]></title>
-    <link href="http://hjinu.github.io/blog/2015/03/15/rails/"/>
-    <updated>2015-03-15T03:32:22+09:00</updated>
-    <id>http://hjinu.github.io/blog/2015/03/15/rails</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[nokogiri gem 설치 문제]]></title>
     <link href="http://hjinu.github.io/blog/2014/09/09/nokogirseolci-munje/"/>
     <updated>2014-09-09T19:31:41+09:00</updated>
@@ -93,7 +87,7 @@
 gem이 설치되어 있는데도 불구하고 bundle install 실행 시에 계속 gem을 깔라는 오류가 떠서 
 거의 이틀동안 구글에 있는 모든 해결 방법을 다 해봤는데 고칠 수 없었고…</p>
 
-<!-- More -->
+<!-- more -->
 
 <p>ruby 버전을 2.0.0으로 바꿨더니 모두 해결되었다… 
 앞으로 최신 버전에 대해서 보수적으로 대할 것 같다..</p>
